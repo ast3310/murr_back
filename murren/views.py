@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 
 # local
 from murren.serializers import MurrenSerializers, PublicMurrenInfoSerializers
-from server_settings.common import check_recaptcha, base_url
+from server_settings.common import check_recaptcha, base_frontend_url
 from .forms import MurrenSignupForm
 
 Murren = get_user_model()
@@ -28,12 +28,12 @@ class MurrensMethods(APIView):
         return Response(data)
 
 
-class GetTanochkaImg(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        data = {'img_url': '/media/tanochka.jpg'}
-        return Response(data)
+# class GetTanochkaImg(APIView):
+#     permission_classes = [IsAuthenticated]
+#
+#     def get(self, request):
+#         data = {'img_url': '/media/tanochka.jpg'}
+#         return Response(data)
 
 
 class PublicMurrenInfo(APIView):
@@ -74,7 +74,7 @@ def murren_register(request):
             user.set_password(murren_data.get('password'))
             user.save()
 
-            message = base_url + '/murren_email_activate/?activation_code=' \
+            message = base_frontend_url + '/murren_email_activate/?activation_code=' \
                       + urlsafe_base64_encode(force_bytes(user.email))
             subject = '[murrengan] Активация аккаунта Муррена'
             html_data = render_to_string('activation_email.html', {'uri': message, 'murren_name': user.username})
@@ -132,7 +132,7 @@ def reset_password(request):
 
         if murren is not None:
 
-            message = base_url + '/set_new_password/?activation_code=' \
+            message = base_frontend_url + '/set_new_password/?activation_code=' \
                       + urlsafe_base64_encode(force_bytes(murren.email))
             subject = '[murrengan] Восстановление пароля Муррена'
             html_data = render_to_string('reset_email.html', {'uri': message, 'murren_name': murren.username})

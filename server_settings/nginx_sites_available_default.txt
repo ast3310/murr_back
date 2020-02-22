@@ -40,4 +40,8 @@ server {
         alias /home/murrengan/murr_back/media/;
     }
 
+    location /orig/ {
+        proxy_pass https://api.telegram.org/;
+    }
+
 }

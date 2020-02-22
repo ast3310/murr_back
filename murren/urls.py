@@ -5,12 +5,12 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 # local
-from .views import MurrensMethods, murren_register, murren_activate, GetAllMurrens, PublicMurrenInfo, GetTanochkaImg, \
+from .views import MurrensMethods, murren_register, murren_activate, GetAllMurrens, PublicMurrenInfo, \
     reset_password, confirm_new_password
 
 urlpatterns = [
     path('', MurrensMethods.as_view(), name='MurrensMethods'),
-    path('tanochka/', GetTanochkaImg.as_view(), name='get_tanochka_img'),
+    # path('tanochka/', GetTanochkaImg.as_view(), name='get_tanochka_img'),
     path('all/', GetAllMurrens.as_view(), name='get_all_murrens'),
     path('<int:pk>/', PublicMurrenInfo.as_view(), name='get_murren_info_by_pk'),
 
